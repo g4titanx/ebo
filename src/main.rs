@@ -68,7 +68,10 @@ fn main() -> anyhow::Result<()> {
                     ((obfuscated.len() as f64 / bytecode.len() as f64) - 1.0) * 100.0
                 );
             } else {
-                info!("Obfuscation complete. Output length: {} bytes", obfuscated.len());
+                info!(
+                    "Obfuscation complete. Output length: {} bytes",
+                    obfuscated.len()
+                );
             }
 
             let output_path = "obfuscated.bin";
@@ -82,8 +85,8 @@ fn main() -> anyhow::Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use crate::obfuscator::Obfuscator;
     use crate::evm::{compute_cfg_complexity, parse_bytecode, Opcode};
+    use crate::obfuscator::Obfuscator;
     use proptest::prelude::*;
     use std::fs;
 
@@ -110,10 +113,7 @@ mod tests {
         let mut obfuscator = Obfuscator::new(&bytecode, 42);
         let obfuscated = obfuscator.obfuscate();
         assert!(!obfuscated.is_empty());
-        assert!(
-            obfuscated == vec![0x01]
-                || obfuscated == vec![0x60, 0x01, 0x01, 0x60, 0x01, 0x01]
-        );
+        assert!(obfuscated == vec![0x01] || obfuscated == vec![0x60, 0x01, 0x01, 0x60, 0x01, 0x01]);
     }
 
     #[test]
@@ -168,7 +168,7 @@ mod tests {
                 0x60, 0x01, 0x01, // PUSH1 1, ADD
                 0x55, // SSTORE
                 0x60, 0x00, 0x52, // PUSH1 0, MSTORE
-                0x60, 0x20, 0x60, 0x00, 0xF3 // PUSH1 32, PUSH1 0, RETURN
+                0x60, 0x20, 0x60, 0x00, 0xF3, // PUSH1 32, PUSH1 0, RETURN
             ]
         });
         let original_blocks = parse_bytecode(&bytecode);

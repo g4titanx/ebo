@@ -2,8 +2,6 @@
 name = "ebo"
 version = "0.1.0"
 edition = "2021"
-description = "EVM Bytecode Obfuscator with Chaotic Shuffle"
-license = "MIT"
 
 [dependencies]
 clap = { version = "4.4", features = ["derive"] }
